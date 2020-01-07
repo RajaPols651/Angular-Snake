@@ -36,3 +36,13 @@ export class Helper{
       }
 }
 
+export class KeyBoardKeys{
+  static readonly ESC_KEY = 27;
+  static readonly LEFT_ARROW_KEY = 37;
+  static readonly RIGHT_ARROW_KEY = 39;
+  static readonly DOWN_ARROW_KEY = 40;
+  static readonly UP_ARROW_KEY = 38;
+  static readonly SPACEBAR_KEY = 32;
+  static readonly A_KEY = 65;
+}
+

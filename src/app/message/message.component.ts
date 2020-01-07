@@ -1,11 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { Position } from '../snake/snake.component';
 import { Helper } from '../utilities/utilities';
+import { MessageSettings } from '../models/message-settings';
 
-export interface MessageSettings{
-  position: Position;
-  message: string;
-}
 @Component({
   selector: 'app-message',
   templateUrl: './message.component.html',
@@ -31,7 +27,7 @@ export class MessageComponent implements OnInit, OnDestroy {
 
   public showMessage(settings: MessageSettings){
     this.show = true;
-    this.setPosition(Helper.getClientWidth() / 2, Helper.getClientHeight() / 2);
+    this.setPosition(Helper.getClientWidth() / 2 - 200, Helper.getClientHeight() / 2 - 100);
     this.setMessage(settings.message);
   }
 

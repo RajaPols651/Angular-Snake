@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Position } from '../snake/snake.component';
+import { Position } from '../models/position';
 
 @Component({
   selector: 'app-snake-food',
@@ -14,10 +14,6 @@ export class SnakeFoodComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-  }
-
-  onPositionChange(d): void{
-
   }
 
 }

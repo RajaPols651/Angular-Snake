@@ -1,15 +1,13 @@
-<div id="main" [ngStyle]="board">
+<div id="main" class="board" [style.width]="width - 50 + 'px'" [style.height]="height - 50 + 'px'">
     <div  class="toolbar" id="toolbar">
-        Speed: <select>
-            <option>slow</option>
-            <option>medium</option>
-            <option>fast</option>
-        </select>
+        <div style="background-color: linen; padding:5px; border-radius: 10%;">Length: {{snakeLength}}</div>
     </div>
-    <div  id="board" [ngStyle]="gameStyle">
+    <div  id="board" class="play-area" [style.width]="maxLeft + 'px'" [style.height]="maxTop + 'px'">
         <app-snake-food [Position]="FoodPosition" ></app-snake-food>
         <app-snake (move)="onMove($event)" #Snake></app-snake>
     </div>
-    <div class="footer" [style.top]="maxTop + 40 + 'px'">length: {{snakeLength}}</div>
+    <div class="footer" [style.top]="maxTop + 40 + 'px'">
+        
+    </div>
     <app-message (Ok)="onMessageOk($event)" #message></app-message>
 </div>

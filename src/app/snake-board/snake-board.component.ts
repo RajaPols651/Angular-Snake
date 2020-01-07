@@ -1,19 +1,11 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
-import { fromEvent, Observable, Subscription, interval } from 'rxjs';
-import { SnakeComponent, Direction, SnakeBlock, Position } from '../snake/snake.component';
-import { Helper } from '../utilities/utilities';
-import { ThrowStmt } from '@angular/compiler';
+import { fromEvent, Subscription } from 'rxjs';
+import { SnakeComponent } from '../snake/snake.component';
+import { Helper, KeyBoardKeys } from '../utilities/utilities';
 import { MessageComponent } from '../message/message.component';
-
-export class KeyBoardKeys{
-  static readonly ESC_KEY = 27;
-  static readonly LEFT_ARROW_KEY = 37;
-  static readonly RIGHT_ARROW_KEY = 39;
-  static readonly DOWN_ARROW_KEY = 40;
-  static readonly UP_ARROW_KEY = 38;
-  static readonly SPACEBAR_KEY = 32;
-  static readonly A_KEY = 65;
-}
+import {  Direction  } from '../enums';
+import { Position } from '../models/position';
+import { SnakeBlock } from '../models/snake-block';
 
 @Component({
   selector: 'app-snake-board',
@@ -65,7 +57,6 @@ export class SnakeBoardComponent implements OnInit, OnDestroy, AfterViewInit {
   placeRandomFood(): void{
     this.FoodPosition = new Position(Helper.getActualLeft(Helper.getRandomInt(this.maxLeft)), 
                         Helper.getActualTop(Helper.getRandomInt(this.maxTop)));
-    console.log(this.FoodPosition);
   }
 
   setUpBoard() : void{
@@ -73,29 +64,9 @@ export class SnakeBoardComponent implements OnInit, OnDestroy, AfterViewInit {
     this.snakeLength = 3;
     this.height = Helper.getClientHeight();
     this.width = Helper.getClientWidth();
-    
     this.maxLeft = Math.floor(this.width / 20) * 20 - 80;
     this.maxTop = Math.floor(this.height / 20) * 20 - 80;
 
-    this.board = {
-      "background-color": "red",
-      "height" : this.height -50 + "px",
-      "width": this.width - 50 + "px",
-      "margin": "10px",
-      "position": "relative",
-      "left": "0px",
-      "top": "0px"
-    };
-
-     this.gameStyle = {
-      "background-color": "blue",
-      "height" : this.maxTop + "px",
-      "width": this.maxLeft + "px",
-      "left": "20px",
-      "top": "20px",
-      "position": "absolute"
-    };
-    //this.snakeComponent.resetSnake();
     this.placeRandomFood();
   }
 
@@ -105,7 +76,6 @@ export class SnakeBoardComponent implements OnInit, OnDestroy, AfterViewInit {
     if(keyCode == KeyBoardKeys.LEFT_ARROW_KEY){
       if(this.snakeComponent.getSnakeDirection() == Direction.Right)
       {
-      //  this.snakeDied = true;
         return;
       }
       this.snakeComponent.moveLeft();
@@ -113,7 +83,6 @@ export class SnakeBoardComponent implements OnInit, OnDestroy, AfterViewInit {
     if(keyCode == KeyBoardKeys.UP_ARROW_KEY){
       if(this.snakeComponent.getSnakeDirection() == Direction.Down)
       {
-       // this.snakeDied = true;
         return;
       }
       this.snakeComponent.moveUp();
@@ -121,7 +90,6 @@ export class SnakeBoardComponent implements OnInit, OnDestroy, AfterViewInit {
     if(keyCode == KeyBoardKeys.RIGHT_ARROW_KEY){
       if(this.snakeComponent.getSnakeDirection() == Direction.Left)
       {
-      //  this.snakeDied = true;
         return;
       }
       this.snakeComponent.moveRight();
@@ -129,7 +97,6 @@ export class SnakeBoardComponent implements OnInit, OnDestroy, AfterViewInit {
     if(keyCode == KeyBoardKeys.DOWN_ARROW_KEY){
       if(this.snakeComponent.getSnakeDirection() == Direction.Up)
       {
-      //  this.snakeDied = true;
         return;
       }
       this.snakeComponent.moveDown();
