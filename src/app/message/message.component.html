@@ -1,0 +1,4 @@
+<div class="board-message" *ngIf="show" [style.left]="left" [style.top]="top">
+    <div style="margin-bottom: 20px;">{{message}}</div>
+    <div><button (click)="onOk()">Play again</button></div>
+</div>

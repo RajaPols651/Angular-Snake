@@ -1,0 +1,9 @@
+.toolbar{
+    left: 100px;
+    position: absolute;
+}
+
+.footer{
+    position: absolute;
+    left: 100px;
+}

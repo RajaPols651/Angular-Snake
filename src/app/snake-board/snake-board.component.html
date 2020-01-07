@@ -1,0 +1,15 @@
+<div id="main" [ngStyle]="board">
+    <div  class="toolbar" id="toolbar">
+        Speed: <select>
+            <option>slow</option>
+            <option>medium</option>
+            <option>fast</option>
+        </select>
+    </div>
+    <div  id="board" [ngStyle]="gameStyle">
+        <app-snake-food [Position]="FoodPosition" ></app-snake-food>
+        <app-snake (move)="onMove($event)" #Snake></app-snake>
+    </div>
+    <div class="footer" [style.top]="maxTop + 40 + 'px'">length: {{snakeLength}}</div>
+    <app-message (Ok)="onMessageOk($event)" #message></app-message>
+</div>
