@@ -6,6 +6,11 @@ export class Snake{
     blocks: SnakeBlock[] = [];
     private headPosition: Position;
     private tail: SnakeBlock;
+    
+    public get head() : SnakeBlock {
+      return this.blocks[0];
+    }
+    
     constructor(initialLength: number, headPosition: Position){
         this.blocks = this.getInitialBlocks();
         this.headPosition = headPosition;

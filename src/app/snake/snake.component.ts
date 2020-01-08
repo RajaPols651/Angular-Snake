@@ -37,35 +37,36 @@ export class SnakeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.intervalSub = interval(100).subscribe((n) => {
+    this.intervalSub = interval(75).subscribe((n) => {
       if(this.direction == Direction.None) return;
-      let head = this.snake.blocks[0];
-      from(this.snake.blocks).subscribe((block) => {
-        let dir: number = 1;
-        let offsetX: number = 20;
-        let offsetY: number = 20;
-        if(this.direction == Direction.Left || this.direction == Direction.Up){
-          dir = -1;
-        }
-        if(this.direction == Direction.Left || this.direction == Direction.Right){
-          offsetX = 20;
-          offsetY = 0;
-        }
-        if(this.direction == Direction.Up || this.direction == Direction.Down){
-          offsetY = 20;
-          offsetX = 0;
-        }
-        if(block == head){
-          block.setActive(block.position.left + dir * offsetX, block.position.top + dir * offsetY);
-          this.move.emit(block);
-        }
-        else{
-          block.setActive(block.prev.prevPosition.left, block.prev.prevPosition.top);
-        }
-
-      });
+      from(this.snake.blocks).subscribe((block) => this.slither(block));
     });
     
+  }
+
+  private slither(block: SnakeBlock): void{
+    let dir: number = 1;
+    let offsetX: number = 20;
+    let offsetY: number = 20;
+    if(this.direction == Direction.Left || this.direction == Direction.Up){
+      dir = -1;
+    }
+    if(this.direction == Direction.Left || this.direction == Direction.Right){
+      offsetX = 20;
+      offsetY = 0;
+    }
+    if(this.direction == Direction.Up || this.direction == Direction.Down){
+      offsetY = 20;
+      offsetX = 0;
+    }
+    if(block == this.snake.head){
+      block.setActive(block.position.left + dir * offsetX, block.position.top + dir * offsetY);
+      this.move.emit(block);
+    }
+    else{
+      block.setActive(block.prev.prevPosition.left, block.prev.prevPosition.top);
+    }
+
   }
 
   go(direction: Direction): void{
