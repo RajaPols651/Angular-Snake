@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit, OnDestroy, Output, EventEmitter } fro
 import { interval, Subscription, from } from 'rxjs';
 import { Direction } from '../enums';
 import { SnakeBlock } from '../models/snake-block';
+import { Snake } from '../models/snake-model';
 
 
 @Component({
@@ -15,11 +16,12 @@ export class SnakeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.intervalSub.unsubscribe();
     this.move.unsubscribe();
   }
-  //blocks: number[] = [1,2,3,4,5,6,7,8,9];
-  blocks: SnakeBlock[] = this.getInitialBlocks();
+  snake: Snake;
   intervalSub: Subscription;
   private direction: Direction = Direction.None;
-  constructor() { }
+  constructor() { 
+    this.snake = new Snake(3, null);
+  }
 
   ngOnInit() {
     
@@ -27,40 +29,21 @@ export class SnakeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   resetSnake(): void{
     this.direction = Direction.None;
-    this.blocks = this.getInitialBlocks();
+    this.snake.resetSnake();
   }
 
   getSnakeDirection(): Direction{
-    return this.blocks[0].getMovingDirection();
-  }
-
-  getInitialBlocks(): SnakeBlock[]{
-    let blocks: SnakeBlock[] = [];
-    let head = new SnakeBlock(100, 0);
-    let b1 = new SnakeBlock(80, 0);
-    b1.prev = head;
-
-    let b2 = new SnakeBlock(80, 0);
-    b2.prev = b1;
-
-    let b3 = new SnakeBlock(60, 0);
-    b3.prev = b2;
-    blocks.push(head);
-    blocks.push(b1);
-    blocks.push(b2);
-    blocks.push(b3);
-    return blocks;
+     return this.snake.blocks[0].getMovingDirection();
   }
 
   ngAfterViewInit(): void {
     this.intervalSub = interval(100).subscribe((n) => {
       if(this.direction == Direction.None) return;
-      let head = this.blocks[0];
-      from(this.blocks).subscribe((block) => {
+      let head = this.snake.blocks[0];
+      from(this.snake.blocks).subscribe((block) => {
         let dir: number = 1;
         let offsetX: number = 20;
         let offsetY: number = 20;
-        //console.log(block);
         if(this.direction == Direction.Left || this.direction == Direction.Up){
           dir = -1;
         }
@@ -128,28 +111,7 @@ export class SnakeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   addBlock(): void{
-    let lastBlock = this.blocks[this.blocks.length-1];
-    let newBlock: SnakeBlock = null;
-    if(lastBlock){
-      if(lastBlock.getMovingDirection() == Direction.Left){
-        newBlock = new SnakeBlock(lastBlock.position.left + 20, lastBlock.position.top);
-      }
-
-      if(lastBlock.getMovingDirection() == Direction.Right){
-        newBlock = new SnakeBlock(lastBlock.position.left - 20, lastBlock.position.top);
-      }
-
-      if(lastBlock.getMovingDirection() == Direction.Up){
-        newBlock = new SnakeBlock(lastBlock.position.left, lastBlock.position.top + 20);
-      }
-
-      if(lastBlock.getMovingDirection() == Direction.Down){
-        newBlock = new SnakeBlock(lastBlock.position.left, lastBlock.position.top - 20);
-      }
-    }
-
-    newBlock.prev = lastBlock;
-    this.blocks.push(newBlock);
+    this.snake.addBlocks(1);
   }
 
 }
