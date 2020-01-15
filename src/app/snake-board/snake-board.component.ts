@@ -13,7 +13,7 @@ import { SnakeBlock } from '../models/snake-block';
   styleUrls: ['./snake-board.component.css']
 })
 export class SnakeBoardComponent implements OnInit, OnDestroy, AfterViewInit {
-  subscription : Subscription;
+  private subscription : Subscription;
   width: number = 0;
   height: number = 0;
   board : object = null;
@@ -25,7 +25,7 @@ export class SnakeBoardComponent implements OnInit, OnDestroy, AfterViewInit {
   maxLeft: number = 20;
   maxTop: number = 20;
   topScore: number = 1;
-  snakeLength: number = 3;
+  snakeLength: number = 5;
 
   FoodPosition: Position;
 
@@ -61,7 +61,7 @@ export class SnakeBoardComponent implements OnInit, OnDestroy, AfterViewInit {
 
   setUpBoard() : void{
     this.snakeDied = false;
-    this.snakeLength = 3;
+    this.snakeLength = 5;
     this.height = Helper.getClientHeight();
     this.width = Helper.getClientWidth();
     this.maxLeft = Math.floor(this.width / 20) * 20 - 80;
@@ -120,19 +120,24 @@ export class SnakeBoardComponent implements OnInit, OnDestroy, AfterViewInit {
       this.snakeDied = true;
     }
 
-    if(event.position.left > this.maxLeft - 20 && event.getMovingDirection() == Direction.Right){
+    else if(event.position.left > this.maxLeft - 20 && event.getMovingDirection() == Direction.Right){
       this.snakeDied = true;
     }
 
-    if(event.position.top < this.minTop && event.getMovingDirection() == Direction.Up){
+    else if(event.position.top < this.minTop && event.getMovingDirection() == Direction.Up){
       this.snakeDied = true;
     }
 
-    if(event.position.top > this.maxTop - 20 && event.getMovingDirection() == Direction.Down){
+    else if(event.position.top > this.maxTop - 20 && event.getMovingDirection() == Direction.Down){
+      this.snakeDied = true;
+    }
+    else if(this.snakeComponent.snake.isBitingSelf(JSON.parse(JSON.stringify(this.snakeComponent.snake.blocks)))){
+      console.log('biting self..dead');
       this.snakeDied = true;
     }
 
     if(this.snakeDied){
+      this.topScore = Math.max(this.topScore, this.snakeLength);
       this.messageComponent.showMessage(
         {
           position: new Position(200, 200),

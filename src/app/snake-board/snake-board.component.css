@@ -1,24 +1,30 @@
 .board{
-    background-color: red;
     margin: 10px;
     position: relative;
     left: 0px;
     top: 0px;
 }
 
+.top-score{
+    background-color: linen; padding:5px; float:right; margin-right:25px
+}
+
+.curr-score{
+    background-color: rgb(233, 210, 187); padding:5px; top: -25px; float:right
+}
+
 .play-area{
     background-color: blue;
     left: 20px;
-    top: 60px;
+    top: 40px;
     position: absolute;
 }
 
 .toolbar{
     left: 100px;
-    position: absolute;
 }
 
 .footer{
     position: absolute;
-    left: 100px;
+    left: 20px;
 }

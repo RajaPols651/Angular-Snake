@@ -21,6 +21,16 @@ export class Snake{
         this.blocks = this.getInitialBlocks();
     }
 
+    isBitingSelf(copy: SnakeBlock[]): boolean{
+      let biting = false;
+      let copyHead = copy[0];
+
+      copy.forEach((b, index) => {
+        if(index > 1 && copyHead.position.left == b.position.left && copyHead.position.top == b.position.top) biting = true;
+      });
+      return biting;
+    }
+
     private getInitialBlocks(): SnakeBlock[]{
         let blocks: SnakeBlock[] = [];
         let head = new SnakeBlock(100, 0);
@@ -32,11 +42,20 @@ export class Snake{
     
         let b3 = new SnakeBlock(40, 0);
         b3.prev = b2;
+
+        let b4 = new SnakeBlock(20, 0);
+        b4.prev = b3;
+
+        let b5 = new SnakeBlock(0, 0);
+        b5.prev = b4;
+
         blocks.push(head);
         blocks.push(b1);
         blocks.push(b2);
         blocks.push(b3);
-        this.tail = b3;
+        blocks.push(b4);
+        blocks.push(b5);
+        this.tail = b5;
         return blocks;
       }
 
