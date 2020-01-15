@@ -2,4 +2,5 @@
 body{
     font-family: fantasy;
     font-size: 12px;
+    overflow: hidden;
 }

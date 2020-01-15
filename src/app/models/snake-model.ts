@@ -69,7 +69,6 @@ export class Snake{
        let lastBlock = this.tail;
         let newBlock: SnakeBlock = null;
         if(lastBlock){
-            console.log('addada');
           if(lastBlock.getMovingDirection() == Direction.Left){
             newBlock = new SnakeBlock(lastBlock.position.left + 20, lastBlock.position.top);
           }

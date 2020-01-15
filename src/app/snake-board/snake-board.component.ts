@@ -65,7 +65,7 @@ export class SnakeBoardComponent implements OnInit, OnDestroy, AfterViewInit {
     this.height = Helper.getClientHeight();
     this.width = Helper.getClientWidth();
     this.maxLeft = Math.floor(this.width / 20) * 20 - 80;
-    this.maxTop = Math.floor(this.height / 20) * 20 - 80;
+    this.maxTop = Math.floor(this.height / 20) * 20 - 140;
 
     this.placeRandomFood();
   }
