@@ -3,12 +3,13 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node server.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
+  "engines": {"node": "10.15.1", "npm": "6.4.1"},
   "private": true,
   "dependencies": {
     "@angular/animations": "~8.2.14",
@@ -21,7 +22,9 @@
     "@angular/router": "~8.2.14",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
-    "zone.js": "~0.9.1"
+    "zone.js": "~0.9.1",
+    "express": "4.17.1",
+    "body-parser": "1.19.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.803.20",
